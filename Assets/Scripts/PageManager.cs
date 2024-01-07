@@ -9,57 +9,40 @@ public class PageManager : MonoBehaviour
     public Enemy enemy;
     public bool mirage = false;
     public bool teleport = false;
-    public int mirageReset = 5;
-    public int teleportReset = 20;
-
-
-    AudioSource audioSource;
-    public AudioClip PageGrab;
+    public int mirageReset = 10;
 
     private void OnTriggerEnter(Collider other)
     {
         Destroy(other.gameObject);
         pageCount++;
 
-        audioSource = GetComponent<AudioSource>();
-        audioSource.PlayOneShot(PageGrab);
-
-        if (pageCount == 1)
+        if(pageCount == 1)
         {
             enemy.target = gameObject.transform;
-            enemy.speed *= 1.2f;
         }
         if (pageCount == 2)
         {
-            mirage = true;
-
+            enemy.speed *= 1.5f;
         }
         if (pageCount == 3)
         {
-            enemy.speed *= 1.2f;
-            mirageReset--;
+            enemy.distance *= 1.5f;
+            enemy.wanderDistance *= 1.5f;
         }
         if (pageCount == 4)
         {
-            teleport = true;
-            mirageReset--;
-
+            mirage = true;
         }
         if (pageCount == 5)
         {
-            enemy.distance *= 1.1f;
-            enemy.wanderDistance *= 1.4f;
-            mirageReset--;
-            teleportReset = 15;
-
+            mirageReset = 10;
+            enemy.speed *= 1.4f;
+            enemy.distance *= 1.2f;
+            enemy.wanderDistance *= 1.5f;
         }
         if (pageCount == 6)
         {
-            mirageReset = 10;
-            enemy.speed *= 1.2f;
-            enemy.distance *= 1.1f;
-            enemy.wanderDistance *= 1.4f;
-            teleportReset = 10;
+            teleport = true;
         }
     }
 }
